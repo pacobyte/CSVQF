@@ -231,14 +231,20 @@ Else If (ColOrder = "")
 	SB_SetText("Rows: " CSV_TotalRows(DataIdentifier) - FirstRow ", Cols: " CSV_TotalCols(DataIdentifier),2)
 SB_SetText("Hits: NA",3)
 TrayTip                             ; file is now loaded so we can turn it off in case it was a fast loading file
-Gosub SetAttach                     ; comment this line to disable Attach
+; Gosub SetAttach                     ; comment this line to disable Attach
 Gui, Show, autosize center Maximize, %AppWindow%
 Gosub, GetText
 Return
 
-SetAttach:
-	Attach(he1, "w1 h1")
-Return
+; SetAttach:
+; 	Attach(he1, "w1 h1")
+; Return
+
+GuiSize:
+	If (A_EventInfo = 1) ; The window has been minimized.
+		Return
+	AutoXYWH("wh", he1)
+return
 
 Filter:
 ControlFocus, Edit1, %AppWindow%
